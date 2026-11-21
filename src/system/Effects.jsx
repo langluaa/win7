@@ -19,8 +19,8 @@ function BlueScreen() {
     <div className="fx-bsod" role="img" aria-label="Simulated crash screen">
       <div className="fx-bsod-inner">
         <div className="fx-bsod-face">:(</div>
-        <p>Your pretend PC ran into a problem that it made up, and needs to restart. Don&rsquo;t worry — nothing real happened.</p>
-        <p>We&rsquo;re just collecting some imaginary error info, and then you can get back to the desktop.</p>
+        <p>Your PC ran into a problem and needs to restart.</p>
+        <p>We&rsquo;re just collecting some error info, and then we will restart for you.</p>
         <p className="fx-bsod-pct">{count}% complete</p>
         <div className="fx-bsod-foot">
           <div className="fx-bsod-qr">
