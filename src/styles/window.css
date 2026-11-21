@@ -1,0 +1,452 @@
+/* ---------- Aero window frame ------------------------------------------- */
+.win7-window {
+  --frame: 8px;
+  --caption: 30px;
+  position: absolute;
+  border-radius: 7px 7px 5px 5px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.55),
+    0 4px 22px 2px rgba(0, 0, 0, 0.55);
+  animation: win-open 0.22s cubic-bezier(0.1, 0.8, 0.3, 1);
+  transform-origin: 50% 50%;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s ease,
+    box-shadow 0.2s;
+  touch-action: none;
+  contain: layout;
+}
+
+.win7-window:not(.active) {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Glass layer: blurred backdrop + colorization + reflections */
+.win7-window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0) 0 18%, rgba(255, 255, 255, 0.2) 21%, rgba(255, 255, 255, 0.06) 25%, rgba(255, 255, 255, 0) 30% 55%, rgba(255, 255, 255, 0.16) 58%, rgba(255, 255, 255, 0) 64% 100%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.22) 26px, rgba(255, 255, 255, 0.1) 60px, rgba(255, 255, 255, 0.14) 100%),
+    rgba(var(--glass-rgb), var(--glass-a));
+  backdrop-filter: blur(9px) saturate(1.25);
+  -webkit-backdrop-filter: blur(9px) saturate(1.25);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 1px 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.win7-window:not(.active)::before {
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0) 0 18%, rgba(255, 255, 255, 0.16) 21%, rgba(255, 255, 255, 0) 30% 55%, rgba(255, 255, 255, 0.12) 58%, rgba(255, 255, 255, 0) 64% 100%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.35)),
+    rgba(var(--glass-rgb), calc(var(--glass-a) * 0.45));
+}
+
+html.no-transparency .win7-window::before {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0) 0 18%, rgba(255, 255, 255, 0.18) 21%, rgba(255, 255, 255, 0) 30% 55%, rgba(255, 255, 255, 0.12) 58%, rgba(255, 255, 255, 0) 64% 100%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.05)),
+    var(--glass-solid);
+}
+
+html.no-transparency .win7-window:not(.active)::before {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.3)), var(--glass-solid);
+}
+
+@keyframes win-open {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(4deg) scale(0.88) translateY(10px);
+  }
+}
+
+.win7-window.closing {
+  animation: win-close 0.19s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes win-close {
+  to {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-3deg) scale(0.9) translateY(6px);
+  }
+}
+
+.win7-window.minimized {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 0.25s ease,
+    visibility 0s 0.25s;
+}
+
+/* Aero Peek: other windows turn into glass sheets */
+.win7-window.peeked {
+  transition: opacity 0.2s;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.win7-window.peeked > * {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.win7-window.peeked::before {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: none;
+}
+
+/* ---------- Title bar ---------------------------------------------------- */
+.wf-titlebar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--caption);
+  display: flex;
+  align-items: center;
+  padding: 0 120px 0 8px;
+  touch-action: none;
+}
+
+.wf-icon {
+  width: 16px;
+  height: 16px;
+  margin: -1px 5px 0 1px;
+  flex: none;
+  display: flex;
+}
+
+.wf-title {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #000;
+  font-size: var(--font-size);
+  line-height: 20px;
+  padding: 0 10px 0 2px;
+  margin-top: -1px;
+  text-shadow:
+    0 0 9px #fff,
+    0 0 9px #fff,
+    0 0 12px #fff,
+    0 0 14px rgba(255, 255, 255, 0.9);
+}
+
+/* Glow plate behind title (Aero draws a soft white blob behind caption text) */
+.wf-title::before {
+  content: '';
+  position: absolute;
+  inset: 3px 0 2px -4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.45);
+  filter: blur(6px);
+  z-index: -1;
+}
+
+.dialog .wf-titlebar {
+  padding-left: 10px;
+}
+
+/* ---------- Caption buttons --------------------------------------------- */
+.wf-buttons {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  display: flex;
+  height: 20px;
+  z-index: 3;
+}
+
+.wf-btn {
+  position: relative;
+  width: 26px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-top: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.3) 45%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.12) 75%, rgba(255, 255, 255, 0.35) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.4);
+  transition:
+    background 0.18s,
+    box-shadow 0.18s;
+}
+
+.wf-btn svg {
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+  position: relative;
+  top: 0;
+}
+
+.wf-min {
+  border-radius: 0 0 0 4px;
+  border-right: none;
+  width: 27px;
+}
+
+.wf-max {
+  border-radius: 0;
+  border-right: none;
+  width: 26px;
+}
+
+.wf-close {
+  width: 45px;
+  border-radius: 0 0 4px 0;
+}
+
+.wf-close.solo {
+  border-radius: 0 0 4px 4px;
+  width: 43px;
+}
+
+.win7-window.active .wf-close {
+  background: linear-gradient(to bottom, #e8a89a 0%, #dd8a77 44%, #c8462b 50%, #c43c22 70%, #d57359 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 190, 170, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.wf-btn:hover:not(:disabled) {
+  background: linear-gradient(to bottom, #c4e6fb 0%, #a1d4f6 44%, #3e9fe2 50%, #3cb3f5 80%, #8ee4ff 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(200, 240, 255, 0.7),
+    0 0 9px 2px rgba(110, 200, 255, 0.8);
+  z-index: 2;
+}
+
+.wf-close:hover:not(:disabled),
+.win7-window.active .wf-close:hover {
+  background: linear-gradient(to bottom, #f6b4a3 0%, #ef9c86 44%, #e0401f 50%, #e5502a 75%, #ffa27a 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 210, 190, 0.7),
+    0 0 10px 2px rgba(255, 110, 70, 0.85);
+}
+
+.wf-btn:active:not(:disabled) {
+  background: linear-gradient(to bottom, #8ab7dc 0%, #6097c6 44%, #10518b 50%, #1e7bc2 80%, #42b3ec 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: none;
+}
+
+.wf-close:active:not(:disabled),
+.win7-window.active .wf-close:active {
+  background: linear-gradient(to bottom, #d4887a 0%, #c26652 44%, #8b1c06 50%, #a92f12 75%, #e06c45 100%);
+}
+
+.wf-btn:disabled svg {
+  opacity: 0.45;
+}
+
+.win7-window:not(.active) .wf-btn svg {
+  opacity: 0.8;
+}
+
+/* ---------- Client area -------------------------------------------------- */
+.wf-client {
+  position: absolute;
+  left: var(--frame);
+  right: var(--frame);
+  top: var(--caption);
+  bottom: var(--frame);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
+  touch-action: auto;
+}
+
+.win7-window.glass-top .wf-client {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  top: calc(var(--caption) - 1px);
+}
+
+.win7-window.maximized {
+  --frame: 0px;
+  --caption: 22px;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+}
+
+.win7-window.maximized .wf-buttons {
+  right: 2px;
+}
+
+.win7-window.maximized .wf-titlebar {
+  padding-left: 4px;
+}
+
+.win7-window.maximized .wf-client {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.win7-window.maximized::before {
+  border-radius: 0;
+}
+
+/* ---------- Resize handles ---------------------------------------------- */
+.wf-resize {
+  position: absolute;
+  z-index: 4;
+  touch-action: none;
+}
+
+.wf-n,
+.wf-s {
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  cursor: ns-resize;
+}
+
+.wf-n {
+  top: -3px;
+  height: 6px;
+}
+
+.wf-s {
+  bottom: -3px;
+}
+
+.wf-e,
+.wf-w {
+  top: 10px;
+  bottom: 10px;
+  width: 8px;
+  cursor: ew-resize;
+}
+
+.wf-e {
+  right: -3px;
+}
+
+.wf-w {
+  left: -3px;
+}
+
+.wf-ne,
+.wf-nw,
+.wf-se,
+.wf-sw {
+  width: 16px;
+  height: 16px;
+}
+
+.wf-ne {
+  top: -3px;
+  right: -3px;
+  cursor: nesw-resize;
+}
+
+.wf-nw {
+  top: -3px;
+  left: -3px;
+  cursor: nwse-resize;
+}
+
+.wf-se {
+  bottom: -3px;
+  right: -3px;
+  cursor: nwse-resize;
+}
+
+.wf-sw {
+  bottom: -3px;
+  left: -3px;
+  cursor: nesw-resize;
+}
+
+@media (pointer: coarse) {
+  .wf-n,
+  .wf-s {
+    height: 14px;
+  }
+  .wf-s {
+    bottom: -7px;
+  }
+  .wf-e,
+  .wf-w {
+    width: 14px;
+  }
+  .wf-e {
+    right: -7px;
+  }
+  .wf-w {
+    left: -7px;
+  }
+  .wf-ne,
+  .wf-nw,
+  .wf-se,
+  .wf-sw {
+    width: 26px;
+    height: 26px;
+  }
+  .wf-btn {
+    height: 24px;
+  }
+  .wf-min {
+    width: 32px;
+  }
+  .wf-max {
+    width: 32px;
+  }
+  .wf-close {
+    width: 50px;
+  }
+  .wf-buttons {
+    height: 24px;
+  }
+}
+
+/* Aero Snap preview: glass rectangle that grows from the cursor */
+.snap-preview {
+  position: fixed;
+  z-index: 9000;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    inset 0 0 30px rgba(255, 255, 255, 0.35);
+  background: rgba(var(--glass-rgb), 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+  animation: snap-grow 0.22s ease-out;
+}
+
+@keyframes snap-grow {
+  from {
+    clip-path: circle(4% at var(--ox) var(--oy));
+    opacity: 0.2;
+  }
+  to {
+    clip-path: circle(150% at var(--ox) var(--oy));
+  }
+}

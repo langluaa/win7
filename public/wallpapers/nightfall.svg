@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140a33"/><stop offset="0.55" stop-color="#5a2b7a"/><stop offset="0.8" stop-color="#e0708a"/><stop offset="1" stop-color="#ffb37a"/></linearGradient>
+    <radialGradient id="m" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff8e8"/><stop offset="0.6" stop-color="#ffe6c0" stop-opacity="0.5"/><stop offset="1" stop-color="#ffe6c0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1920" height="1200" fill="url(#s)"/>
+  <circle cx="1450" cy="300" r="140" fill="url(#m)"/><circle cx="1450" cy="300" r="48" fill="#fff8e8"/>
+  <g fill="#fff" opacity="0.8"><circle cx="200" cy="120" r="1.5"/><circle cx="500" cy="80" r="1"/><circle cx="800" cy="200" r="1.4"/><circle cx="1100" cy="90" r="1.2"/><circle cx="1750" cy="150" r="1.4"/><circle cx="380" cy="300" r="1"/></g>
+  <path d="M0 1200 V900 h80v-120h60v-60h50v180h70v-260h90v300h60v-140h80v160h60v-220h40v-40h40v260h90v-180h70v120h60v-320h100v360h50v-150h80v170h70v-240h60v220h80v-130h90v150h60v-280h90v320h70v-160h80v180h90V1200Z" fill="#0a0618"/>
+  <g fill="#ffd27a" opacity="0.8"><rect x="300" y="800" width="8" height="10"/><rect x="330" y="860" width="8" height="10"/><rect x="760" y="720" width="8" height="10"/><rect x="790" y="790" width="8" height="10"/><rect x="1120" y="680" width="8" height="10"/><rect x="1150" y="760" width="8" height="10"/><rect x="1500" y="820" width="8" height="10"/><rect x="1720" y="780" width="8" height="10"/></g>
+</svg>
