@@ -166,6 +166,24 @@ await test('files and settings persist after a reload', async () => {
   await page.waitForSelector('.ex-item:has-text("e2e note")');
 });
 
+await test('Chaos Lab joke effects start and stop', async () => {
+  await page.click('.start-orb');
+  await page.fill('.sm-search-input', 'chaos');
+  await page.keyboard.press('Enter');
+  await page.waitForSelector('.chaos');
+  await page.click('[data-fx="matrix"]');
+  await page.waitForSelector('.fx-root .fx-matrix');
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(200);
+  assert((await page.locator('.fx-root').count()) === 0, 'effect did not stop on Esc');
+  await page.click('[data-fx="bsod"]');
+  await page.waitForSelector('.fx-bsod');
+  await page.click('.fx-bsod');
+  await page.waitForTimeout(200);
+  assert((await page.locator('.fx-bsod').count()) === 0, 'BSOD did not dismiss');
+  await page.click('.win7-window[data-app="chaos"] .wf-close');
+});
+
 await test('Shut down reaches the power-off screen', async () => {
   await page.click('.start-orb');
   await page.click('.sm-shutdown');

@@ -10,6 +10,7 @@ import { Taskbar } from './system/Taskbar.jsx';
 import { StartMenu } from './system/StartMenu.jsx';
 import { TrayFlyouts } from './system/TrayFlyouts.jsx';
 import { ContextMenuLayer } from './system/ContextMenu.jsx';
+import { EffectsLayer } from './system/Effects.jsx';
 import { BootScreen, LogonScreen, StatusScreen, OffScreen, SleepScreen, usePhase } from './system/Screens.jsx';
 import { Screensaver } from './system/Screensaver.jsx';
 import { messageBox } from './system/dialogs.jsx';
@@ -150,6 +151,7 @@ function DesktopSession({ visible }) {
       <StartMenu />
       <TrayFlyouts />
       <ContextMenuLayer />
+      <EffectsLayer />
       {ss}
     </div>
   );

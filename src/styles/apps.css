@@ -3607,3 +3607,422 @@
   padding: 4px 12px 4px 0;
   vertical-align: top;
 }
+
+/* ======================================================================== */
+/* Chaos Lab (joke effects launcher)                                          */
+/* ======================================================================== */
+.chaos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: linear-gradient(160deg, #2a1150 0%, #3f1f74 45%, #1b1030 100%);
+  color: #ece4ff;
+}
+
+.chaos-head {
+  padding: 14px 18px 8px;
+  flex: none;
+}
+
+.chaos-head h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 300;
+  background: linear-gradient(90deg, #ff6ad5, #9b5bff, #5bc9ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.chaos-head p {
+  margin: 0;
+  color: #c3b5e6;
+  line-height: 1.5;
+}
+
+.chaos-head b {
+  color: #fff;
+}
+
+.chaos-grid {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 10px 18px;
+  align-content: start;
+}
+
+.chaos-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 12px;
+  border: 1px solid rgba(155, 110, 255, 0.4);
+  border-radius: 8px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  color: #ece4ff;
+  text-align: left;
+  transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+}
+
+.chaos-card:hover {
+  border-color: #b36aff;
+  box-shadow: 0 0 16px rgba(155, 91, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.chaos-card.on {
+  border-color: #ff6ad5;
+  box-shadow: 0 0 18px rgba(255, 106, 213, 0.6);
+  background: linear-gradient(160deg, rgba(255, 106, 213, 0.22), rgba(155, 91, 255, 0.12));
+}
+
+.chaos-emoji {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.chaos-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.chaos-desc {
+  font-size: 11px;
+  color: #bdaee4;
+  line-height: 1.35;
+}
+
+.chaos-action {
+  margin-top: 4px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #ff9be4;
+}
+
+.chaos-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px 14px;
+  flex: none;
+  border-top: 1px solid rgba(155, 110, 255, 0.3);
+}
+
+/* ---------- Effect overlays -------------------------------------------- */
+.fx-root {
+  position: fixed;
+  inset: 0;
+  z-index: 250000;
+}
+
+.fx-root.fx-glitch {
+  z-index: 180000;
+  pointer-events: none;
+}
+
+.fx-fill {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fx-panic {
+  position: fixed;
+  right: 16px;
+  bottom: 56px;
+  z-index: 260000;
+  padding: 10px 16px;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  background: linear-gradient(#ff5bd0, #b02a86);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  animation: fx-panic-pulse 1.2s ease-in-out infinite;
+}
+
+.fx-glitch .fx-panic {
+  pointer-events: auto;
+}
+
+@keyframes fx-panic-pulse {
+  50% {
+    box-shadow: 0 0 20px 3px rgba(255, 91, 208, 0.95);
+    border-color: #ffd0f2;
+  }
+}
+
+/* BSOD */
+.fx-bsod {
+  position: fixed;
+  inset: 0;
+  background: #1073b6;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', 'Open Sans', sans-serif;
+  cursor: pointer;
+  animation: fx-fade 0.25s;
+}
+
+@keyframes fx-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.fx-bsod-inner {
+  max-width: 720px;
+  padding: 40px;
+}
+
+.fx-bsod-face {
+  font-size: 90px;
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+
+.fx-bsod-inner p {
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.45;
+  margin: 0 0 16px;
+}
+
+.fx-bsod-pct {
+  font-size: 22px !important;
+  margin-top: 24px !important;
+}
+
+.fx-bsod-foot {
+  display: flex;
+  gap: 18px;
+  margin-top: 30px;
+  align-items: flex-start;
+}
+
+.fx-bsod-qr {
+  background: #fff;
+  padding: 6px;
+  flex: none;
+}
+
+.fx-bsod-text p {
+  font-size: 13px !important;
+  margin: 0 0 6px !important;
+}
+
+.fx-bsod-hint {
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .fx-bsod-inner {
+    padding: 20px;
+  }
+  .fx-bsod-face {
+    font-size: 60px;
+  }
+  .fx-bsod-inner p {
+    font-size: 15px;
+  }
+}
+
+/* Matrix / melt canvases */
+.fx-matrix {
+  background: #000;
+}
+
+/* Cascade decoys */
+.fx-cascade {
+  pointer-events: none;
+}
+
+.fx-decoy {
+  position: absolute;
+  border: 1px solid #0a3d7d;
+  border-radius: 4px 4px 2px 2px;
+  background: #ece9d8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.fx-decoy-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
+  padding: 0 4px 0 6px;
+  background: linear-gradient(to bottom, #3f8bf0, #1b5bc4);
+  color: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.fx-decoy-btns {
+  display: flex;
+  gap: 2px;
+}
+
+.fx-decoy-btns i {
+  width: 11px;
+  height: 11px;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  background: #4f9bf5;
+}
+
+.fx-decoy-btns i.x {
+  background: #d14;
+}
+
+.fx-decoy-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 20px);
+  font-size: 28px;
+  color: #e0a500;
+}
+
+/* Popup storm */
+.fx-popups {
+  pointer-events: none;
+}
+
+.fx-popup {
+  position: absolute;
+  width: 300px;
+  border: 1px solid #0a3d7d;
+  border-radius: 6px 6px 3px 3px;
+  background: #f0f0f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  animation: fx-pop 0.18s ease-out;
+}
+
+@keyframes fx-pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+.fx-popup-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding: 0 4px 0 8px;
+  background: linear-gradient(to bottom, #e8a05a, #d4583c);
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+}
+
+.fx-popup-title button {
+  width: 20px;
+  height: 18px;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  background: linear-gradient(#e8a493, #c7462b);
+  color: #fff;
+  font-size: 9px;
+}
+
+.fx-popup-body {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 14px;
+  background: #fff;
+  color: #000;
+  line-height: 1.4;
+}
+
+.fx-popup-ico {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #bfe6ff, #2f8ae6 60%, #0a3a8c);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fx-popup-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 12px 12px;
+  background: #fff;
+  border-radius: 0 0 3px 3px;
+}
+
+/* Bonzi buddy */
+.fx-bonzi-layer {
+  pointer-events: none;
+}
+
+.fx-bonzi {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 140px;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+  will-change: transform;
+}
+
+.fx-bonzi-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+  padding: 5px 10px;
+  background: #fffde0;
+  border: 1px solid #c9b53a;
+  border-radius: 10px;
+  color: #333;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.fx-bonzi-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #fffde0;
+}
+
+/* Glitch scanlines */
+.fx-glitch-scan {
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 0 2px, rgba(0, 0, 0, 0.08) 2px 4px);
+  mix-blend-mode: overlay;
+  animation: fx-scan 0.2s steps(2) infinite;
+}
+
+@keyframes fx-scan {
+  to {
+    background-position: 0 6px;
+  }
+}

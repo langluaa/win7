@@ -96,6 +96,7 @@ export function defaultFs(username = 'User') {
     file('win-1', 'explorer.exe', 'windows', '', { system: true, exe: 'explorer' }),
     file('ie-1', 'iexplore.exe', 'pf-ie', '', { system: true, exe: 'iexplore' }),
     file('mg-1', 'Minesweeper.exe', 'pf-games', '', { system: true, exe: 'minesweeper' }),
+    file('mg-2', 'ChaosLab.exe', 'pf-games', '', { system: true, exe: 'chaos' }),
     file('doc-welcome', 'Welcome.txt', 'documents', WELCOME),
     file('doc-todo', 'To-do.txt', 'documents', TODO),
     link('fav-1', 'Desktop', 'favorites', { path: 'desktop' }),
@@ -104,6 +105,7 @@ export function defaultFs(username = 'User') {
     link('lnk-mine', 'Minesweeper', 'desktop', { app: 'minesweeper' }),
     link('lnk-paint', 'Paint', 'desktop', { app: 'mspaint' }),
     link('lnk-calc', 'Calculator', 'desktop', { app: 'calc' }),
+    link('lnk-chaos', 'Chaos Lab', 'desktop', { app: 'chaos' }),
     file('desk-readme', 'Read me.txt', 'desktop', WELCOME),
   ];
   return Object.fromEntries(list.map((n) => [n.id, n]));

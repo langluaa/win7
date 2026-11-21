@@ -462,6 +462,20 @@ const ICONS = {
       ))}
     </FolderBase>
   ),
+  chaos: (
+    <>
+      <circle cx="24" cy="24" r="20" fill="url(#i-mine)" stroke="#2a1150" strokeWidth="1" />
+      <circle cx="24" cy="24" r="20" fill="#4a1d8a" opacity="0.55" />
+      <circle cx="17" cy="20" r="6.5" fill="#fff" stroke="#222" strokeWidth="1.2" />
+      <circle cx="31" cy="20" r="6.5" fill="#fff" stroke="#222" strokeWidth="1.2" />
+      <circle cx="18.6" cy="21.5" r="2.8" fill="#111" />
+      <circle cx="29.4" cy="21.5" r="2.8" fill="#111" />
+      <circle cx="17.7" cy="20.6" r="0.9" fill="#fff" />
+      <circle cx="28.5" cy="20.6" r="0.9" fill="#fff" />
+      <path d="M16 31q8 7 16 0" fill="none" stroke="#ff5bd0" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M8 12l3 5 5-2-3 6 5 2-6 1M40 12l-3 5-5-2 3 6-5 2 6 1" fill="none" stroke="#9b5bff" strokeWidth="1.4" opacity="0.8" />
+    </>
+  ),
   'file-exe': (
     <>
       <rect x="5" y="9" width="38" height="30" rx="1.5" fill="#fff" stroke="#6d8bb0" />

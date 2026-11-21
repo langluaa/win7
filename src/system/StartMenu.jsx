@@ -18,7 +18,7 @@ const ALL_PROGRAMS = [
     folder: 'Accessories',
     items: [{ app: 'calc' }, { app: 'cmd' }, { app: 'notepad' }, { app: 'mspaint' }, { app: 'run' }, { app: 'explorer' }, { app: 'taskmgr' }],
   },
-  { folder: 'Games', items: [{ app: 'minesweeper' }] },
+  { folder: 'Games', items: [{ app: 'minesweeper' }, { app: 'chaos' }] },
   { folder: 'Maintenance', items: [{ app: 'help' }, { app: 'control', label: 'Control Panel' }] },
   { folder: 'Startup', items: [] },
 ];

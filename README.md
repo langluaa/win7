@@ -26,6 +26,7 @@ A Windows 7 desktop that runs entirely in the browser. It's built with React and
 | Internet Explorer | Tabs, history, favorites bar and center, a built-in home page, and opening local HTML/text files. Sites that refuse to be framed get an infobar with a link that opens them in a real tab. |
 | Minesweeper | Beginner/Intermediate/Advanced/Custom, safe first click, chording, flags and question marks, resizable board, statistics, two tile themes, long-press to flag on touch |
 | Command Prompt | `dir cd type mkdir rmdir del ren copy move tree start color title cls ver tasklist ipconfig ping systeminfo …` over the virtual disk, with history and Tab completion |
+| Chaos Lab | Harmless joke "viruses": fake crash screen, Matrix rain, screen melt, falling windows, pop-up storm, a bouncing desktop buddy and a glitch effect. Every one is pure animation inside the simulator — no network, no real files — and stops with Esc or a panic button. |
 | Photo Viewer, Task Manager, Run, Help and Support, About Windows | |
 
 **Persistence.** Files, folders, desktop layout and every setting are saved in `localStorage`. Use *Control Panel → Backup and Restore* to export or import everything as a JSON file, or to reset the simulator.

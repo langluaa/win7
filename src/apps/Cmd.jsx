@@ -37,7 +37,7 @@ VER            Displays the Windows version.
 WHOAMI         Displays the current user name.
 `;
 
-const APP_ALIASES = { notepad: 'notepad', calc: 'calc', mspaint: 'mspaint', explorer: 'explorer', iexplore: 'iexplore', control: 'control', winmine: 'minesweeper', minesweeper: 'minesweeper', winver: 'winver', taskmgr: 'taskmgr', cmd: 'cmd' };
+const APP_ALIASES = { notepad: 'notepad', calc: 'calc', mspaint: 'mspaint', explorer: 'explorer', iexplore: 'iexplore', control: 'control', winmine: 'minesweeper', minesweeper: 'minesweeper', chaos: 'chaos', virus: 'chaos', winver: 'winver', taskmgr: 'taskmgr', cmd: 'cmd' };
 
 function splitArgs(s) {
   const out = [];

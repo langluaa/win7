@@ -23,6 +23,8 @@ const RUN_MAP = {
   winver: ['winver'],
   winmine: ['minesweeper'],
   minesweeper: ['minesweeper'],
+  chaos: ['chaos'],
+  virus: ['chaos'],
   taskmgr: ['taskmgr'],
   desk: ['control', { page: 'display' }],
   'desk.cpl': ['control', { page: 'display' }],

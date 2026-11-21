@@ -8,6 +8,7 @@ import Browser from './Browser.jsx';
 import Minesweeper from './Minesweeper.jsx';
 import Cmd from './Cmd.jsx';
 import PhotoViewer from './PhotoViewer.jsx';
+import ChaosLab from './ChaosLab.jsx';
 import { RunDialog, Winver, TaskManager, Help } from './Misc.jsx';
 
 // id -> app definition. `hot` is the taskbar hot-track glow colour.
@@ -26,6 +27,7 @@ export const APPS = {
   taskmgr: { name: 'Windows Task Manager', icon: 'cp-display', component: TaskManager, size: { w: 420, h: 470 }, minSize: { w: 320, h: 300 }, hot: '#5fbf4f', keywords: ['processes', 'kill'] },
   help: { name: 'Windows Help and Support', icon: 'help', component: Help, size: { w: 720, h: 560 }, minSize: { w: 360, h: 300 }, hot: '#3aa6ff', keywords: ['help', 'support'] },
   getstarted: { name: 'Getting Started', icon: 'getting-started', component: Help, size: { w: 720, h: 560 }, minSize: { w: 360, h: 300 }, hot: '#3aa6ff', defaultProps: { topic: 'start' } },
+  chaos: { name: 'Chaos Lab', icon: 'chaos', component: ChaosLab, size: { w: 560, h: 520 }, minSize: { w: 360, h: 320 }, single: true, hot: '#b36aff', keywords: ['virus', 'prank', 'joke', 'matrix', 'bsod', 'fun', 'effects', 'chaos'] },
   msgbox: { name: 'Message', icon: 'info', component: MessageBoxApp, hidden: true, resizable: false, maximizable: false },
   filedlg: { name: 'Open', icon: 'folder', component: FileDialogApp, hidden: true, minSize: { w: 420, h: 300 } },
   customdlg: { name: 'Dialog', icon: 'info', component: CustomDialogApp, hidden: true, resizable: false, maximizable: false },
