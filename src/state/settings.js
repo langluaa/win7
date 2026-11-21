@@ -73,6 +73,7 @@ export const defaultSettings = () => ({
   muted: false,
   screensaver: { type: 'none', wait: 10 },
   bootAnimation: true,
+  gadgets: [], // desktop gadgets: { id, type, x, y, text?, opacity? }
   browser: {
     home: 'about:home',
     favorites: [
@@ -120,6 +121,24 @@ export function addRecentFile(fileId, appId) {
     ...s,
     recentFiles: [{ id: fileId, app: appId }, ...s.recentFiles.filter((r) => r.id !== fileId)].slice(0, 12),
   }));
+}
+
+let gadgetSeq = 0;
+export function addGadget(type) {
+  const id = `g${Date.now().toString(36)}${gadgetSeq++}`;
+  settingsStore.set((s) => {
+    const n = s.gadgets.length;
+    return { ...s, gadgets: [...s.gadgets, { id, type, x: window.innerWidth - 180 - (n % 3) * 30, y: 20 + n * 24, text: type === 'note' ? '' : undefined }] };
+  });
+  return id;
+}
+
+export function updateGadget(id, patch) {
+  settingsStore.set((s) => ({ ...s, gadgets: s.gadgets.map((g) => (g.id === id ? { ...g, ...patch } : g)) }));
+}
+
+export function removeGadget(id) {
+  settingsStore.set((s) => ({ ...s, gadgets: s.gadgets.filter((g) => g.id !== id) }));
 }
 
 export function resetSettings() {

@@ -11,6 +11,11 @@ const CARDS = [
   { id: 'popups', name: 'Pop-up Storm', desc: 'Silly message boxes that multiply when you close them.', emoji: '🗯' },
   { id: 'bonzi', name: 'Desktop Buddy', desc: 'A googly-eyed blob bounces around babbling.', emoji: '👾' },
   { id: 'glitch', name: 'Glitch Out', desc: 'The whole screen flickers, shifts and inverts.', emoji: '📺' },
+  { id: 'earthquake', name: 'Earthquake', desc: 'The entire desktop shakes and rumbles.', emoji: '🫨' },
+  { id: 'flip', name: 'Flip Screen', desc: 'Turns the whole desktop upside down.', emoji: '🙃' },
+  { id: 'format', name: 'Format C: (Not Really)', desc: 'Pretends to wipe the disk, then owns up to the joke.', emoji: '💾' },
+  { id: 'starfield', name: 'Warp Speed', desc: 'Fly through a field of stars at light speed.', emoji: '🌌' },
+  { id: 'fireworks', name: 'Fireworks', desc: 'A celebratory firework show over your desktop.', emoji: '🎆' },
 ];
 
 export default function ChaosLab({ win }) {

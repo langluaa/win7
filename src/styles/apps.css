@@ -3762,81 +3762,65 @@
   }
 }
 
-/* BSOD */
+/* BSOD - authentic Windows 7 text-mode style */
 .fx-bsod {
   position: fixed;
   inset: 0;
-  background: #1073b6;
+  background: #0000aa;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Segoe UI', 'Open Sans', sans-serif;
   cursor: pointer;
-  animation: fx-fade 0.25s;
+  overflow: auto;
+  animation: fx-fade 0.1s steps(1);
 }
 
-@keyframes fx-fade {
-  from {
-    opacity: 0;
+.fx-bsod-pre {
+  margin: 0;
+  padding: 34px 40px;
+  font-family: 'Lucida Console', Consolas, 'DejaVu Sans Mono', monospace;
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 700px) {
+  .fx-bsod-pre {
+    padding: 16px;
+    font-size: 11px;
   }
 }
 
-.fx-bsod-inner {
-  max-width: 720px;
-  padding: 40px;
+/* Earthquake / flip tints */
+.fx-quake-tint {
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.35));
 }
 
-.fx-bsod-face {
-  font-size: 90px;
-  font-weight: 300;
-  margin-bottom: 18px;
+/* Fake format console */
+.fx-format {
+  background: #0a0a0a;
+  color: #cfcfcf;
+  overflow: auto;
 }
 
-.fx-bsod-inner p {
-  font-size: 19px;
-  font-weight: 300;
-  line-height: 1.45;
-  margin: 0 0 16px;
+.fx-format pre {
+  margin: 0;
+  padding: 16px 20px;
+  font-family: 'Lucida Console', Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-.fx-bsod-pct {
-  font-size: 22px !important;
-  margin-top: 24px !important;
+/* Starfield / fireworks canvases */
+.fx-starfield {
+  background: #000008;
 }
 
-.fx-bsod-foot {
-  display: flex;
-  gap: 18px;
-  margin-top: 30px;
-  align-items: flex-start;
-}
-
-.fx-bsod-qr {
-  background: #fff;
-  padding: 6px;
-  flex: none;
-}
-
-.fx-bsod-text p {
-  font-size: 13px !important;
-  margin: 0 0 6px !important;
-}
-
-.fx-bsod-hint {
-  opacity: 0.8;
-}
-
-@media (max-width: 640px) {
-  .fx-bsod-inner {
-    padding: 20px;
-  }
-  .fx-bsod-face {
-    font-size: 60px;
-  }
-  .fx-bsod-inner p {
-    font-size: 15px;
-  }
+.fx-fireworks {
+  background: transparent;
 }
 
 /* Matrix / melt canvases */
@@ -4025,4 +4009,205 @@
   to {
     background-position: 0 6px;
   }
+}
+
+/* ======================================================================== */
+/* Desktop gadgets                                                            */
+/* ======================================================================== */
+.gadgets-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gadget {
+  position: absolute;
+  pointer-events: auto;
+  touch-action: none;
+  filter: drop-shadow(0 3px 7px rgba(0, 0, 0, 0.45));
+  transition: opacity 0.2s;
+}
+
+.gad-tools {
+  position: absolute;
+  top: 2px;
+  right: -22px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.gadget.hover .gad-tools {
+  opacity: 1;
+}
+
+.gad-tools button {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  background: linear-gradient(#fbfcfe, #d6e0ea);
+  font-size: 10px;
+  line-height: 1;
+  padding: 0;
+  color: #333;
+}
+
+.gad-tools button:hover {
+  background: linear-gradient(#eaf5fd, #c5e3f8);
+  border-color: #3c7fb1;
+}
+
+.gad-close:hover {
+  background: linear-gradient(#f6b4a3, #d6452a) !important;
+  color: #fff;
+}
+
+/* Clock */
+.gad-clock {
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Calendar */
+.gad-cal {
+  width: 130px;
+  padding: 10px 0 14px;
+  border-radius: 6px;
+  background: linear-gradient(#fff, #e8eef5);
+  border: 1px solid #b7c2cf;
+  text-align: center;
+}
+
+.gad-cal-day {
+  font-size: 46px;
+  font-weight: 300;
+  line-height: 1;
+  color: #2a3a4a;
+}
+
+.gad-cal-month {
+  color: #c0392b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.gad-cal-dow {
+  color: #566;
+  font-size: 11px;
+}
+
+/* CPU */
+.gad-cpu {
+  display: flex;
+  gap: 2px;
+  padding: 10px;
+  border-radius: 8px;
+  background: radial-gradient(circle at 50% 30%, #3a4048, #15181c);
+  border: 1px solid #000;
+}
+
+.gad-dial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #dfe6ee;
+  font-size: 10px;
+}
+
+/* Weather */
+.gad-weather {
+  width: 120px;
+  padding: 10px;
+  border-radius: 8px;
+  background: linear-gradient(#bfe0ff, #7bb6e8);
+  border: 1px solid #5a86b0;
+  text-align: center;
+  color: #123;
+}
+
+.gad-w-temp {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.gad-w-city {
+  font-size: 12px;
+}
+
+/* Sticky note */
+.gad-note-text {
+  width: 150px;
+  height: 150px;
+  padding: 12px;
+  border: none;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #fef9a0, #fdf36b);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  resize: none;
+  outline: none;
+  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-size: 14px;
+  color: #4a4020;
+  line-height: 1.4;
+}
+
+.gad-note-text::placeholder {
+  color: #b7a94a;
+}
+
+/* Gadget gallery dialog */
+.gadget-gallery {
+  padding: 12px;
+  width: 460px;
+  max-width: 94vw;
+}
+
+.gg-head {
+  margin: 0 0 10px;
+  color: #1e3287;
+}
+
+.gg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.gg-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 8px;
+  border: 1px solid #cdd9e6;
+  border-radius: 4px;
+  background: linear-gradient(#fff, #f2f7fd);
+  text-align: center;
+}
+
+.gg-item:hover {
+  border-color: #7da2ce;
+  background: linear-gradient(#f3f8fd, #d6e8fc);
+}
+
+.gg-name {
+  font-weight: 600;
+}
+
+.gg-desc {
+  font-size: 11px;
+  color: #6d6d6d;
+  line-height: 1.3;
 }

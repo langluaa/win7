@@ -6,44 +6,261 @@ import { WALLPAPERS } from '../state/settings.js';
 import { sound } from '../lib/sound.js';
 
 // ---------------------------------------------------------------------------
-// 1. Fake stop error ("Blue Screen"). Original wording / layout, not a copy.
+// 1. Fake stop error, styled like the classic Windows 7 text-mode "blue screen".
+//    The wording makes clear it's a harmless prank; the layout mimics a real bugcheck.
+
+const STOP_CODES = [
+  ['JOKE_VIRUS_NOT_A_REAL_PROBLEM', '0x0000DEAD', 'prank.sys'],
+  ['NOSTALGIA_OVERFLOW', '0x0000C0DE', 'memories.sys'],
+  ['TOO_MUCH_FUN_EXCEPTION', '0x0000F00D', 'chaos.sys'],
+  ['IRQL_NOT_LESS_THAN_HILARIOUS', '0x0000BEEF', 'giggle.sys'],
+];
 
 function BlueScreen() {
-  const [count, setCount] = useState(0);
+  const [dump, setDump] = useState(0);
+  const [pick] = useState(() => STOP_CODES[(Math.random() * STOP_CODES.length) | 0]);
+  const [addr] = useState(() => 'F' + ((Math.random() * 0xfffffff) | 0).toString(16).toUpperCase().padStart(7, '0'));
   useEffect(() => {
     sound.play('boom');
-    const t = setInterval(() => setCount((c) => (c >= 100 ? 100 : c + Math.ceil(Math.random() * 7))), 220);
+    const t = setInterval(() => setDump((d) => (d >= 100 ? 100 : d + Math.ceil(Math.random() * 6))), 140);
     return () => clearInterval(t);
   }, []);
+  const [name, code, sys] = pick;
   return (
-    <div className="fx-bsod" role="img" aria-label="Simulated crash screen">
-      <div className="fx-bsod-inner">
-        <div className="fx-bsod-face">:(</div>
-        <p>Your pretend PC ran into a problem that it made up, and needs to restart. Don&rsquo;t worry — nothing real happened.</p>
-        <p>We&rsquo;re just collecting some imaginary error info, and then you can get back to the desktop.</p>
-        <p className="fx-bsod-pct">{count}% complete</p>
-        <div className="fx-bsod-foot">
-          <div className="fx-bsod-qr">
-            <svg viewBox="0 0 21 21" width="72" height="72" aria-hidden="true">
-              {Array.from({ length: 21 * 21 }, (_, i) => {
-                const x = i % 21;
-                const y = (i / 21) | 0;
-                const finder = (a, b) => a < 7 && b < 7;
-                const corner = finder(x, y) || finder(20 - x, y) || finder(x, 20 - y);
-                const on = corner ? (x % 6 !== 0 && y % 6 !== 0) || x === 0 || y === 0 : (x * 7 + y * 13 + x * y) % 3 === 0;
-                return on ? <rect key={i} x={x} y={y} width="1" height="1" fill="#fff" /> : null;
-              })}
-            </svg>
-          </div>
-          <div className="fx-bsod-text">
-            <p>For more pretend information about this issue, stare thoughtfully at the QR code.</p>
-            <p>Stop code: PRANK_VIRUS_NOT_REAL</p>
-            <p className="fx-bsod-hint">Press Esc or click to dismiss.</p>
-          </div>
-        </div>
-      </div>
+    <div className="fx-bsod" role="img" aria-label="Simulated Windows 7 stop error (a joke)">
+      <pre className="fx-bsod-pre">{`A problem has been detected and Windows has been shut down to prevent damage
+to your computer. (Just kidding. Nothing is actually wrong.)
+
+${name}
+
+If this is the first time you've seen this stop error screen,
+relax and take a breath. This is a harmless prank running inside the
+Windows 7 simulator. Nothing on your real computer has changed.
+
+If this screen appears again, follow these steps:
+
+Check to make sure you are having a reasonable amount of fun. Disable any
+real worries you may have installed. If you need to use Safe Mode to remove
+or disable components, press Esc or click anywhere to return to the desktop.
+
+Technical information:
+
+*** STOP: ${code} (0xBAADF00D, 0x00000000, 0xC0FFEE00, 0x1DEADBEEF)
+
+***  ${sys} - Address ${addr} base at F0010000, DateStamp 4ae7a2b1
+
+Beginning dump of physical memory
+Dumping physical memory to disk: ${dump}${dump >= 100 ? `
+Physical memory dump complete. (0 real bytes written.)
+Contact nobody, because nothing actually happened.
+
+Press Esc or click anywhere to continue.` : ''}`}</pre>
     </div>
   );
+}
+
+// ---------------------------------------------------------------------------
+// 8. Earthquake: shake the whole desktop.
+
+function Earthquake() {
+  useEffect(() => {
+    const root = document.querySelector('.session');
+    if (!root) return;
+    sound.play('boom');
+    let raf;
+    const t0 = performance.now();
+    const tick = (t) => {
+      const mag = 6 + Math.sin((t - t0) / 600) * 4;
+      const x = (Math.random() * 2 - 1) * mag;
+      const y = (Math.random() * 2 - 1) * mag;
+      const r = (Math.random() * 2 - 1) * 0.6;
+      root.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(raf);
+      root.style.transform = '';
+    };
+  }, []);
+  return <div className="fx-fill fx-quake-tint" />;
+}
+
+// ---------------------------------------------------------------------------
+// 9. Flip the whole screen upside down.
+
+function Flip() {
+  useEffect(() => {
+    const root = document.querySelector('.session');
+    if (!root) return;
+    root.style.transition = 'transform 0.8s cubic-bezier(.6,.1,.3,1)';
+    root.style.transform = 'rotate(180deg)';
+    return () => {
+      root.style.transform = '';
+      setTimeout(() => root && (root.style.transition = ''), 850);
+    };
+  }, []);
+  return null;
+}
+
+// ---------------------------------------------------------------------------
+// 10. Fake "format C:" — a console that pretends to wipe the disk, then owns up.
+
+function FakeFormat() {
+  const [pct, setPct] = useState(-1);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    let p = 0;
+    const warm = setTimeout(() => {
+      setPct(0);
+      const t = setInterval(() => {
+        p += Math.random() * 5;
+        if (p >= 100) {
+          p = 100;
+          setPct(100);
+          clearInterval(t);
+          setTimeout(() => setDone(true), 500);
+        } else setPct(Math.floor(p));
+      }, 160);
+    }, 1400);
+    return () => clearTimeout(warm);
+  }, []);
+  const bars = pct >= 0 ? Math.round(pct / 2) : 0;
+  return (
+    <div className="fx-fill fx-format">
+      <pre>{`Microsoft Windows [Version 6.1.7601]
+(c) 2009 Totally Not A Real Company. Good luck.
+
+C:\\>format C: /Q /Y
+WARNING, ALL DATA ON NON-REMOVABLE DISK
+DRIVE C: WILL BE LOST (it won't, this is a joke).
+Proceeding with Quick Format...
+`}
+{pct >= 0 && `\n${pct}% completed.\n[${'\u2588'.repeat(bars)}${'\u2591'.repeat(50 - bars)}]\n`}
+{done && `
+Format complete.
+
+...
+
+...just kidding!  (\u256F\u00B0\u25A1\u00B0)\u256F
+
+Your files are exactly where you left them. Nothing was formatted,
+deleted, harmed, or even mildly inconvenienced.
+
+C:\\>_
+
+Press Esc or the Stop button to return to the desktop.`}</pre>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 11. Starfield warp.
+
+function Starfield() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const c = ref.current;
+    const g = c.getContext('2d');
+    let w = (c.width = innerWidth);
+    let h = (c.height = innerHeight);
+    const N = Math.min(800, Math.floor((w * h) / 2200));
+    const stars = Array.from({ length: N }, () => ({ x: Math.random() * w - w / 2, y: Math.random() * h - h / 2, z: Math.random() * w }));
+    let raf;
+    const draw = () => {
+      g.fillStyle = 'rgba(0,0,8,0.4)';
+      g.fillRect(0, 0, w, h);
+      const cx = w / 2;
+      const cy = h / 2;
+      for (const s of stars) {
+        s.z -= 8;
+        if (s.z <= 0) {
+          s.x = Math.random() * w - w / 2;
+          s.y = Math.random() * h - h / 2;
+          s.z = w;
+        }
+        const k = 128 / s.z;
+        const px = cx + s.x * k;
+        const py = cy + s.y * k;
+        if (px < 0 || px >= w || py < 0 || py >= h) continue;
+        const size = (1 - s.z / w) * 3;
+        const shade = Math.min(255, (1 - s.z / w) * 320) | 0;
+        g.fillStyle = `rgb(${shade},${shade},${Math.min(255, shade + 40)})`;
+        g.fillRect(px, py, size, size);
+      }
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    const onResize = () => {
+      w = c.width = innerWidth;
+      h = c.height = innerHeight;
+    };
+    addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener('resize', onResize);
+    };
+  }, []);
+  return <canvas ref={ref} className="fx-fill fx-starfield" />;
+}
+
+// ---------------------------------------------------------------------------
+// 12. Fireworks over the desktop.
+
+function Fireworks() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const c = ref.current;
+    const g = c.getContext('2d');
+    let w = (c.width = innerWidth);
+    let h = (c.height = innerHeight);
+    const parts = [];
+    let raf;
+    let t = 0;
+    const burst = () => {
+      const x = w * (0.15 + Math.random() * 0.7);
+      const y = h * (0.12 + Math.random() * 0.45);
+      const hue = (Math.random() * 360) | 0;
+      const n = 60 + ((Math.random() * 40) | 0);
+      for (let i = 0; i < n; i++) {
+        const a = (Math.PI * 2 * i) / n;
+        const sp = 1.5 + Math.random() * 4;
+        parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, hue: hue + (Math.random() * 30 - 15) });
+      }
+    };
+    const draw = () => {
+      g.fillStyle = 'rgba(0,0,0,0.18)';
+      g.fillRect(0, 0, w, h);
+      if (t++ % 32 === 0) burst();
+      for (let i = parts.length - 1; i >= 0; i--) {
+        const p = parts[i];
+        p.vy += 0.03;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 0.012;
+        if (p.life <= 0) {
+          parts.splice(i, 1);
+          continue;
+        }
+        g.globalAlpha = Math.max(0, p.life);
+        g.fillStyle = `hsl(${p.hue},100%,${55 + p.life * 20}%)`;
+        g.fillRect(p.x, p.y, 2.4, 2.4);
+      }
+      g.globalAlpha = 1;
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    const onResize = () => {
+      w = c.width = innerWidth;
+      h = c.height = innerHeight;
+    };
+    addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener('resize', onResize);
+    };
+  }, []);
+  return <canvas ref={ref} className="fx-fill fx-fireworks" />;
 }
 
 // ---------------------------------------------------------------------------
@@ -372,7 +589,20 @@ function Glitch() {
   return <div className="fx-fill fx-glitch-scan" />;
 }
 
-const EFFECTS = { bsod: BlueScreen, matrix: Matrix, melt: Melt, cascade: Cascade, popups: PopupStorm, bonzi: Bonzi, glitch: Glitch };
+const EFFECTS = {
+  bsod: BlueScreen,
+  matrix: Matrix,
+  melt: Melt,
+  cascade: Cascade,
+  popups: PopupStorm,
+  bonzi: Bonzi,
+  glitch: Glitch,
+  earthquake: Earthquake,
+  flip: Flip,
+  format: FakeFormat,
+  starfield: Starfield,
+  fireworks: Fireworks,
+};
 const DISMISS_ON_CLICK = new Set(['bsod']);
 
 export function EffectsLayer() {

@@ -8,6 +8,7 @@ import { Icon, ShortcutArrow } from './icons.jsx';
 import { SYS_ITEMS, displayName, openNode, setClipboard, pasteInto, deleteItems, newItem, showProperties, createShortcut, importFiles, emptyRecycleBin, launch } from './shell.jsx';
 import { messageBox } from './dialogs.jsx';
 import { layoutIcons } from '../lib/layout.js';
+import { openGadgetGallery } from './Gadgets.jsx';
 
 export const CELL = {
   small: { w: 74, h: 62, icon: 32 },
@@ -420,7 +421,7 @@ export function Desktop() {
       },
       { separator: true },
       { label: 'Screen resolution', icon: 'cp-display', onClick: () => launch('control', { page: 'display' }) },
-      { label: 'Gadgets', icon: 'screensaver', disabled: true },
+      { label: 'Gadgets', icon: 'screensaver', onClick: () => openGadgetGallery() },
       { label: 'Personalize', icon: 'cp-appearance', onClick: () => launch('control', { page: 'personalization' }) },
     ]);
   };

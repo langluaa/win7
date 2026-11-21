@@ -9,6 +9,7 @@ import { launch } from '../system/shell.jsx';
 import { sound } from '../lib/sound.js';
 import { Screensaver } from '../system/Screensaver.jsx';
 import { AnalogClock, Calendar } from '../system/TrayFlyouts.jsx';
+import { openGadgetGallery } from '../system/Gadgets.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 const wpUrl = (id) => `${BASE}${(WALLPAPERS.find((w) => w.id === id) || WALLPAPERS[0]).file}`;
@@ -39,7 +40,7 @@ const CAT_TASKS = {
     ['Personalization', 'cp-appearance', 'personalization', ['Change the theme', 'Change desktop background', 'Change window glass colors', 'Change screen saver']],
     ['Display', 'cp-display', 'display', ['Make text and other items larger or smaller', 'Adjust screen resolution']],
     ['Taskbar and Start Menu', 'cp-taskbar', 'taskbar', ['Customize the Start menu', 'Customize icons on the taskbar']],
-    ['Desktop Gadgets', 'screensaver', 'desktopicons', ['Change desktop icons']],
+    ['Desktop Gadgets', 'screensaver', 'gadgets', ['Add gadgets to the desktop', 'Get more gadgets online']],
   ],
   'cat-hardware': [
     ['Devices and Printers', 'printer', 'devices', ['Add a device', 'Mouse']],
@@ -67,6 +68,7 @@ const PAGES = {
   color: { title: 'Window Color and Appearance', parent: 'personalization', icon: 'cp-appearance' },
   screensaver: { title: 'Screen Saver Settings', parent: 'personalization', icon: 'screensaver' },
   desktopicons: { title: 'Desktop Icon Settings', parent: 'personalization', icon: 'computer' },
+  gadgets: { title: 'Desktop Gadgets', parent: 'personalization', icon: 'screensaver' },
   display: { title: 'Display', parent: 'cat-appearance', icon: 'cp-display' },
   taskbar: { title: 'Taskbar and Start Menu', parent: 'cat-appearance', icon: 'cp-taskbar' },
   appearance: { title: 'Appearance and Personalization', parent: 'home', category: 'cat-appearance' },
@@ -664,6 +666,36 @@ function DesktopIcons({ go }) {
           Restore Default
         </button>
       </div>
+    </Page>
+  );
+}
+
+function GadgetsPage({ go, winId }) {
+  const gadgets = useStore(settingsStore, (s) => s.gadgets);
+  return (
+    <Page go={go} title="Add gadgets to the desktop" sub="Gadgets are mini-programs that sit on your desktop. Drag one to move it; hover it for close and opacity controls.">
+      <div className="cp-row">
+        <button className="w7-btn" onClick={() => openGadgetGallery(winId)}>
+          Open Gadget Gallery
+        </button>
+        <button className="w7-btn" disabled={!gadgets.length} onClick={() => settingsStore.set((s) => ({ ...s, gadgets: [] }))}>
+          Remove all gadgets
+        </button>
+      </div>
+      <fieldset className="w7-group" style={{ marginTop: 10 }}>
+        <legend>On your desktop ({gadgets.length})</legend>
+        {gadgets.length ? (
+          <div className="cp-iconchecks">
+            {gadgets.map((g) => (
+              <span key={g.id} style={{ textTransform: 'capitalize' }}>
+                • {g.type}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="cp-muted">No gadgets yet. Open the gallery to add some.</p>
+        )}
+      </fieldset>
     </Page>
   );
 }
@@ -1403,6 +1435,7 @@ export default function ControlPanel({ win }) {
       color: WindowColor,
       screensaver: ScreenSaverPage,
       desktopicons: DesktopIcons,
+      gadgets: GadgetsPage,
       display: DisplayPage,
       taskbar: TaskbarPage,
       devices: Devices,

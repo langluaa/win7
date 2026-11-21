@@ -14,6 +14,7 @@ A Windows 7 desktop that runs entirely in the browser. It's built with React and
 - Start menu with most-used programs, an All Programs tree, live search over programs, files and Control Panel, and a shut-down split button
 - Desktop icons on a grid. You can drag them (positions persist), select several with a rubber band, rename them inline, and drop items onto folders or the Recycle Bin. The desktop has its full right-click menu. You can also drag real files from your computer onto the desktop to import them.
 - Screensavers (Bubbles, Mystify, Ribbons, Blank) that start after a set idle time
+- Desktop gadgets (Clock, Calendar, CPU meter, Weather, Sticky Note) added from a gadget gallery; draggable, with close/opacity controls, and their positions and note text persist
 
 **Programs**
 | Program | Highlights |
@@ -26,7 +27,7 @@ A Windows 7 desktop that runs entirely in the browser. It's built with React and
 | Internet Explorer | Tabs, history, favorites bar and center, a built-in home page, and opening local HTML/text files. Sites that refuse to be framed get an infobar with a link that opens them in a real tab. |
 | Minesweeper | Beginner/Intermediate/Advanced/Custom, safe first click, chording, flags and question marks, resizable board, statistics, two tile themes, long-press to flag on touch |
 | Command Prompt | `dir cd type mkdir rmdir del ren copy move tree start color title cls ver tasklist ipconfig ping systeminfo …` over the virtual disk, with history and Tab completion |
-| Chaos Lab | Harmless joke "viruses": fake crash screen, Matrix rain, screen melt, falling windows, pop-up storm, a bouncing desktop buddy and a glitch effect. Every one is pure animation inside the simulator — no network, no real files — and stops with Esc or a panic button. |
+| Chaos Lab | 12 harmless joke "viruses": an authentic Windows 7 blue-screen stop error, Matrix rain, screen melt, falling windows, pop-up storm, a bouncing desktop buddy, glitch-out, earthquake, upside-down flip, a fake "format C:" that owns up to the joke, warp-speed starfield and fireworks. Every one is pure animation inside the simulator — no network, no real files — and stops with Esc or a panic button. |
 | Photo Viewer, Task Manager, Run, Help and Support, About Windows | |
 
 **Persistence.** Files, folders, desktop layout and every setting are saved in `localStorage`. Use *Control Panel → Backup and Restore* to export or import everything as a JSON file, or to reset the simulator.

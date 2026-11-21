@@ -184,6 +184,28 @@ await test('Chaos Lab joke effects start and stop', async () => {
   await page.click('.win7-window[data-app="chaos"] .wf-close');
 });
 
+await test('Desktop gadgets can be added and persist', async () => {
+  await page.keyboard.down('Meta'); // Win+D: show desktop (clears open windows)
+  await page.keyboard.press('d');
+  await page.keyboard.up('Meta');
+  await page.waitForTimeout(300);
+  await page.mouse.click(1150, 400, { button: 'right' }); // empty desktop, clear of icons/windows
+  await page.waitForSelector('.w7-menu');
+  await page.click('.w7-menu-item:has-text("Gadgets")');
+  await page.waitForSelector('.gadget-gallery');
+  await page.dblclick('.gg-item:has-text("Clock")');
+  await page.dblclick('.gg-item:has-text("Sticky Note")');
+  await page.click('.gadget-gallery .w7-btn:has-text("Close")');
+  await page.waitForTimeout(200);
+  assert((await page.locator('.gadget').count()) === 2, 'gadgets not added');
+  await page.fill('.gad-note-text', 'remember the milk');
+  await page.waitForTimeout(700);
+  await page.reload();
+  await bootToDesktop(page);
+  assert((await page.locator('.gadget').count()) === 2, 'gadgets not persisted');
+  assert((await page.locator('.gad-note-text').inputValue()) === 'remember the milk', 'note text lost');
+});
+
 await test('Shut down reaches the power-off screen', async () => {
   await page.click('.start-orb');
   await page.click('.sm-shutdown');
