@@ -36,8 +36,8 @@ function BlueScreen() {
             </svg>
           </div>
           <div className="fx-bsod-text">
-            <p>For more pretend information about this issue, stare thoughtfully at the QR code.</p>
-            <p>Stop code: PRANK_VIRUS_NOT_REAL</p>
+            <p>For more pretend information about this issue, you can use the provided QR code.</p>
+            <p>Stop code: FATAL_TASK_ERR</p>
             <p className="fx-bsod-hint">Press Esc or click to dismiss.</p>
           </div>
         </div>
